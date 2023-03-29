@@ -87,7 +87,7 @@ namespace N3DCpp
                     {}
       virtual ~C3DShape();
 
-      virtual void Draw();
+      virtual void Draw(){};
 
     S3DRotation & Rotate  (S3DRotation const & crRotation){m_fRotation += crRotation; return m_fRotation;}
     S3DRotation & RotateTo(S3DRotation const & crRotation){m_fRotation  = crRotation; return m_fRotation;}

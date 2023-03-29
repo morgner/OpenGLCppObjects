@@ -24,3 +24,8 @@ C3DColor::C3DColor(GLfloat nR, GLfloat nG, GLfloat nB, GLfloat nA)
   } // C3DColor::C3DColor(GLfloat &rR, GLfloat &rG, GLfloat &rB, GLfloat &rA)
 
  // glColor4f(R, G, B, A);
+ 
+
+C3DColor::~C3DColor()
+    {
+    }
