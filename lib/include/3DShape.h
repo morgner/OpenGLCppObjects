@@ -68,7 +68,8 @@ namespace N3DCpp
   {
   class C3DShape;
 
-  using CVectorShapes = std::vector<C3DShape*>;  
+  using PShape = C3DShape*;
+  using CVectorShapes = std::vector<C3DShape*>; 
 
   class C3DShape
     {
