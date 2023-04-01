@@ -75,7 +75,9 @@ namespace N3DCpp
     {
     protected:
 //      static GLUquadricObj *s_pGluQuadricObj;
-
+      GLuint m_uDisplayList{0};
+      
+          
     public:
         S3DGeometry m_fGeometry{1.f, 1.f, 1.f};
         S3DPosition m_fPosition{0.f, 0.f, 0.f};
@@ -88,7 +90,7 @@ namespace N3DCpp
                     {}
       virtual ~C3DShape();
 
-      virtual void Draw(){};
+      virtual void  Draw();
 
     S3DRotation & Rotate  (S3DRotation const & crRotation){m_fRotation += crRotation; return m_fRotation;}
     S3DRotation & RotateTo(S3DRotation const & crRotation){m_fRotation  = crRotation; return m_fRotation;}
@@ -104,12 +106,9 @@ namespace N3DCpp
       bool NormalsMake()
         {
         if (m_bNormals) return true;
-
         
         return true;
         }
-      long DisplayListMake();
-      bool DisplayListDelete();
 
       S3DGeometry           m_oBoundingBox{1.f, 1.f, 1.f}; 
       bool                  m_bChanged{true};

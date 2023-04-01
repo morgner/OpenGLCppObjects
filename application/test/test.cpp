@@ -5,28 +5,14 @@
 #include <GL/glu.h>
 #include <GL/glut.h>
 
+#include <array>
 
 using namespace N3DCpp;
 
 C3DBox box ({.2f, .2f, .2f}, {1.0f, 1.f, 1.f}, {0.f, 0.f, 0.f});
 
-C3DBox box0({.7f, .3f, .2f}, {0.0f, 0.0f, 0.0f}, {0.f, 0.f, 0.f});
-C3DBox box1({.7f, .3f, .2f}, {0.0f, 0.3f, 0.0f}, {0.f, 0.f, 0.f});
-C3DBox box2({.7f, .3f, .2f}, {0.0f, 0.6f, 0.0f}, {0.f, 0.f, 0.f});
-C3DBox box3({.7f, .3f, .2f}, {0.0f, 0.0f, 0.0f}, {0.f, 0.f, 0.f});
-C3DBox box4({.7f, .3f, .2f}, {0.0f, 0.3f, 0.0f}, {0.f, 0.f, 0.f});
-C3DBox box5({.7f, .3f, .2f}, {0.0f, 0.6f, 0.0f}, {0.f, 0.f, 0.f});
-C3DBox box6({.7f, .3f, .2f}, {0.0f, 0.0f, 0.0f}, {0.f, 0.f, 0.f});
-C3DBox box7({.7f, .3f, .2f}, {0.0f, 0.3f, 0.0f}, {0.f, 0.f, 0.f});
-C3DBox box8({.7f, .3f, .2f}, {0.0f, 0.6f, 0.0f}, {0.f, 0.f, 0.f});
+CVectorShapes bv;
 
-
-
-//  pshape ps = new c3dbox({.7f, .3f, .2f}, {0.f, 0.f, 0.f}, {0.f, 0.f, 0.f});
-
-//  cvectorshapes bv ( [new c3dbox({.7f, .3f, .2f}, {0.f, 0.f, 0.f}, {0.f, 0.f, 0.f}], [ ] };
-
-//  cvectorshapes oszene(new c3dbox({.5f, .5f, .5f}, {0.f, 0.f, 0.f}, {0.f, 0.f, 0.f}));
 
 int fullscreen = 0;
 int mouseDown  = 0;
@@ -45,42 +31,72 @@ float grow_shrink = 70.0f;
 float resize_f = 1.0f;
 
 
-bool init(void)
-    {
-    glClearColor (0.7, 0.9, 0.8, 0.0);
+bool initlights(void) {
+
+    glClearColor(0.9, 0.9, 0.9, 0.0);
+
+   GLfloat ambient[] = {0.2, 0.2, 0.2, 1.0};
+   GLfloat position[] = {0.0, 0.0, 2.0, 1.0};
+   GLfloat mat_diffuse[] = {0.6, 0.6, 0.6, 1.0};
+   GLfloat mat_specular[] = {1.0, 1.0, 1.0, 1.0};
+   GLfloat mat_shininess[] = {50.0};
+
+   glEnable(GL_LIGHTING);
+   glEnable(GL_LIGHT0);
+
+   glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+   glLightfv(GL_LIGHT0, GL_POSITION, position);
+
+   glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+   glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+   glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+
     return true;
-    } 
+}
+
+void init(void) {
+    glColor3f(0,1,0);
+    for (int x : {0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
+        for (int y : {0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
+            bv.push_back(   new C3DBox({.2f, .2f, .2f}, {.15f*x, .15f*y, 0.0f}, {0.f, 0.f, 0.f}) );
+            
+   glClearColor(0.0, 0.0, 0.0, 0.0);
+   glEnable(GL_DEPTH_TEST);
+
+
+   
+// Microsoft:  GLfloat ctrlpoints[0][0][0];   glMap2f(GL_MAP2_VERTEX_3, 0, 1, 3, 4,   0, 1, 12, 4, &ctrlpoints);
+   glEnable(GL_MAP2_VERTEX_3);
+   glEnable(GL_AUTO_NORMAL);
+   glMapGrid2f(20, 0.0, 1.0, 20, 0.0, 1.0);
+   initlights();
+}
 
 void display(void)
     {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glLoadIdentity();
 
-    gluLookAt( 0.0f, 0.0f, 3.0f, -0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+ //   glMatrixMode(GL_MODELVIEW); 
 
-//    glutSolidSphere(0.5, 50, 50);
+//    glLoadIdentity();
+
+//    gluLookAt( 0.0f, 0.0f, 3.0f, -0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+
+    glColor3f(1.0f, 0.5f, 0.5f);
+//    glutSolidSphere(0.5, 20, 20);
 
     glRotatef(-xrot, 1.0f, 0.0f, 0.0f);
     glRotatef(-yrot, 0.0f, 1.0f, 0.0f);
 
-    box0.Draw();
-    box1.Draw();
-    box2.Draw();
-    box3.Draw();
-    box4.Draw();
-    box5.Draw();
-    box6.Draw();
-    box7.Draw();
-    box8.Draw();
-
-//    for (const & a : bv) {a.Draw(); }
-
+    for (auto const & a : bv) { a->Draw();}
+    
     glRotatef(2*xrot, 1.0f, 0.0f, 0.0f);
     glRotatef(2*yrot, 0.0f, 1.0f, 0.0f);
 
+ //   for (auto const & a : bv) { a->Draw();}
+
     glFlush();
     glutSwapBuffers();
-
     }
 
 void reshape (int w, int h)
@@ -115,12 +131,9 @@ void idle(void)
     {
     if (!mouseDown)
         {
-        box.MoveTo( {-1.f, -1.f, 0.f} );
-        box2.MoveTo( {1.f, 1.f, 0.f} );
         xrot += .3f;
         yrot += .4f;
         box.Rotate({xrot, yrot, 0});
-        box2.Rotate({xrot, yrot, 0});
         }
     glutPostRedisplay();
     }
@@ -207,7 +220,8 @@ int main(int argc, char** argv)
 //        glutReshapeFunc(resize);
         glutIdleFunc(idle);
 
-        if (!init()) return 1;
+        //     if (!init()) return 1;
+        init();
 
         glutMainLoop();
 

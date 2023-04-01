@@ -1,7 +1,7 @@
 /***************************************************************************
                           3DBox.h  -  description
                              -------------------
-    begin                : Sun Jan 30 2000
+    begin                : Fri  Apr 15 2023
     copyright            : (C) 2000 by Manfred Morgner
     email                : manfred@morgner.com
  ***************************************************************************/
@@ -12,6 +12,8 @@
 #include "3DShape.h"
 
 #include <GL/gl.h>
+#include <GL/glu.h>
+#include <GL/glut.h>
 
 namespace N3DCpp
   {
@@ -29,13 +31,11 @@ namespace N3DCpp
                     : m_fGeometry(crGeometry), m_fPosition(crPosition), m_fRotation(crRotation)
                     {}
       virtual ~C3DBox();
-
+    
+      GLint NormalsMake();
       virtual void Draw();
 
-    protected:
-      bool NormalsMake();
-      long DisplayListMake();
-      bool DisplayListDelete();
+      
     }; // class C3DBox
   } // namespace 3DCpp
   #endif // _3DBox_H
