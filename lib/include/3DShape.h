@@ -36,7 +36,7 @@ typedef struct XYZ {
 
         bool operator == (XYZ const & crPoint){ return ( X==crPoint.X & Y==crPoint.Y & Z==crPoint.Z ); }
         bool operator != (XYZ const & crPoint){ return not ( *this == crPoint );}
-
+        
         } S3DScale, S3DSize, S3DGeometry, S3DPosition, S3DRotation;
 
 /*
@@ -100,6 +100,8 @@ namespace N3DCpp
 
     S3DGeometry & Scale       (S3DScale const & crScale){m_fGeometry *= crScale; return m_fGeometry;}
     S3DGeometry & ResizeTo    (S3DSize const & crSize){m_fGeometry = crSize; return m_fGeometry;}
+
+     void BoxPlanesMakeTextured(GLfloat cx, GLfloat  cy, GLfloat cz);
 
     protected:
       bool m_bNormals{ false };

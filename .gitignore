@@ -34,4 +34,4 @@
 build/
 *.swp
 CMa*
-
+.vscode/

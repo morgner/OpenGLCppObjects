@@ -99,6 +99,6 @@ namespace N3DCpp
 
     }; // class C3DTexture
 
-  } // namespace mm3Dlib
+  } // namespace N3Cpp
 
 #endif // _3DTexture_H
